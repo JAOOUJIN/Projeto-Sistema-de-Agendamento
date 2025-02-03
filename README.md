@@ -58,3 +58,26 @@ Processos e Funções
 9. Deletar Disciplina
   - Processo: O recepcionista insere o ID da disciplina que deseja remover e confirma a ação.
   - Função: deletarDisciplina(id) no DisciplinaController que chama disciplinaService.deletar(id).
+
+
+Funcionalidades do Aluno
+
+1. Agendar Reposição
+  - Descrição: O aluno pode solicitar o agendamento de uma reposição de aula.
+  - Processo: O aluno preenche um formulário com os detalhes da reposição (data, disciplina, etc.) e envia a solicitação.
+
+2. Visualizar Agendamentos
+  - Descrição: O aluno pode visualizar todos os seus agendamentos.
+  - Processo: O aluno clica em um botão para ver seus agendamentos, que são recuperados do backend.
+
+3. Ver Disciplinas
+  - Descrição: O aluno pode visualizar todas as disciplinas disponíveis.
+  - Processo: O aluno clica em um botão para ver as disciplinas, que são recuperadas do backend.
+
+4. Ver Cursos
+  - Descrição: O aluno pode visualizar todos os cursos disponíveis.
+  - Processo: O aluno clica em um botão para ver os cursos, que são recuperados do backend.
+
+5. Alterar Senha
+  - Descrição: O aluno pode alterar sua senha.
+  - Processo: O aluno preenche um formulário com a senha atual e a nova senha, e envia a solicitação.
