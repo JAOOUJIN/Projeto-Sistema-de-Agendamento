@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamentos Pendentes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300" rel="stylesheet">
+    <link rel="stylesheet" href="pagina_recepcionista.css"> <!-- CSS compartilhado -->
+    <link rel="stylesheet" href="agendamentos_pendentes.css"> <!-- CSS específico -->
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul>
+            <li>
+                <a href="pagina_recepcionista.html" id="homeButton">
+                    <i class="fas fa-home fa-2x nav-icon"></i>
+                    <span class="nav-text">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="openModalBuscarGeral">
+                    <i class="fas fa-search fa-2x nav-icon"></i>
+                    <span class="nav-text">Buscar Geral</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+                <a href="#" id="logoutButton">
+                    <i class="fas fa-power-off fa-2x nav-icon"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <h1>Agendamentos Pendentes</h1>
+        <div id="pendentesContainer">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Aluno</th>
+                        <th>Data</th>
+                        <th>Curso</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="pendentesList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Buscar Geral -->
+    <div id="modalBuscarGeral" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Buscar Geral</h2>
+            <form id="buscarGeralForm">
+                <label for="tipoBusca">O que deseja buscar?</label>
+                <select id="tipoBusca" name="tipoBusca" required>
+                    <option value="aluno">Aluno</option>
+                    <option value="curso">Curso</option>
+                    <option value="disciplina">Disciplina</option>
+                </select>
+                <label for="termoBusca">Termo de busca:</label>
+                <input type="text" id="termoBusca" name="termoBusca" required>
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+    </div>
+    <!-- Modal de Detalhes -->
+    <div id="modalDetalhes" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Detalhes do Agendamento</h2>
+            <div id="detalhesAgendamento">
+            </div>
+        </div>
+    </div>
+
+    <!-- Inclua o arquivo JavaScript -->
+    <script src="agendamentos_pendentes.js"></script>
+</body>
+
+</html>

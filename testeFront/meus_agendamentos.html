@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Agendamentos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300" rel="stylesheet">
+    <link rel="stylesheet" href="meus_agendamentos.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul>
+            <li>
+                <a href="pagina_aluno.html">
+                    <i class="fas fa-home fa-2x nav-icon"></i>
+                    <span class="nav-text">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="meus_agendamentos.html">
+                    <i class="fas fa-calendar-alt fa-2x nav-icon"></i>
+                    <span class="nav-text">Meus Agendamentos</span>
+                </a>
+            </li>
+            <li>
+                <a href="agendar_reposicao.html">
+                    <i class="fas fa-calendar-plus fa-2x nav-icon"></i>
+                    <span class="nav-text">Agendar Reposição</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+                <a href="#" id="logoutButton">
+                    <i class="fas fa-power-off fa-2x nav-icon"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <h1>Meus Agendamentos</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Aluno</th>
+                    <th>Disciplina</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="agendamentosList">
+                <!-- Os agendamentos serão inseridos aqui -->
+            </tbody>
+        </table>
+
+        <!-- Modal para detalhes do agendamento -->
+        <div id="modalDetalhes" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Detalhes do Agendamento</h2>
+                <div id="detalhesAgendamento"></div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="meus_agendamentos.js" defer></script>
+</body>
+
+</html>

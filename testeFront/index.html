@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Login e Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="back">
+        <canvas id="canvas" class="canvas-back"></canvas>
+        <div class="backRight"></div>
+        <div class="backLeft"></div>
+    </div>
+
+    <div id="slideBox">
+        <div class="topLayer">
+            <div class="left">
+                <div class="content">
+                    <h2>Cadastro</h2>
+                    <form id="form-signup" method="post" onsubmit="return false;">
+                        <div class="form-element form-stack">
+                            <label for="nome-completo" class="form-label">Nome Completo</label>
+                            <input id="nome-completo" type="text" name="nome-completo" required>
+                        </div>
+                        <div class="form-element form-stack">
+                            <label for="email" class="form-label">Email</label>
+                            <input id="email" type="email" name="emailAluno" placeholder="exemplo@dominio.com" required>
+                        </div>
+                        <div class="form-element form-stack">
+                            <label for="RA-signup" class="form-label">RA</label>
+                            <input id="RA-signup" type="text" name="ra" required>
+                        </div>
+                        <div class="form-element form-stack">
+                            <label for="password-signup" class="form-label">Senha</label>
+                            <input id="password-signup" type="password" name="senhaAluno" required>
+                        </div>
+                        <div class="form-element form-stack">
+                            <label for="confirm-password" class="form-label">Confirmar Senha</label>
+                            <input id="confirm-password" type="password" name="confirm-password"
+                                placeholder="Digite a senha novamente" required>
+                        </div>
+                        <div class="form-element form-checkbox">
+                            <input id="confirm-terms" type="checkbox" name="confirm" value="yes" class="checkbox"
+                                required>
+                            <label for="confirm-terms">Concordo com os <a href="#">Termos de Serviço</a> e a <a
+                                    href="#">Política de Privacidade</a></label>
+                        </div>
+                        <div class="form-element form-submit">
+                            <button id="signUp" class="signup" type="submit" name="signup">Cadastrar</button>
+                            <button id="goLeft" class="signup off" type="button">Log In</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="right">
+                <div class="content">
+                    <h2>Login</h2>
+                    <form id="form-login" method="post" onsubmit="return false;">
+                        <div class="form-element form-stack">
+                            <label for="user-type" class="form-label">Tipo de Usuário</label>
+                            <select id="user-type" name="user-type" required>
+                                <option value="aluno">Aluno</option>
+                                <option value="recepcionista">Recepcionista</option>
+                            </select>
+                        </div>
+                        <div class="form-element form-stack">
+                            <label for="RA-login" class="form-label">RA</label>
+                            <input id="RA-login" type="text" name="RA" required>
+                        </div>
+                        <div class="form-element form-stack">
+                            <label for="password-login" class="form-label">Senha</label>
+                            <input id="password-login" type="password" name="password" required>
+                        </div>
+                        <div class="form-element form-submit">
+                            <button id="logIn" class="login" type="submit" name="login">Log In</button>
+                            <button id="goRight" class="login off" type="button">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
