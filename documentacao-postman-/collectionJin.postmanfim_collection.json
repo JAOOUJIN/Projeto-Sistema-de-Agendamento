@@ -1,0 +1,1427 @@
+{
+	"info": {
+		"_postman_id": "daeb8953-b592-471f-a93e-f713230e0de0",
+		"name": "collectionJin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40275849"
+	},
+	"item": [
+		{
+			"name": "buscarAluno",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/aluno/buscar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"aluno",
+						"buscar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscartotalAluno",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/aluno/total",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"aluno",
+						"total"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarAlunoNome",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/aluno/buscar/nome/Junior",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"aluno",
+						"buscar",
+						"nome",
+						"Junior"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarAlunoRA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/aluno/SP3134229",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"aluno",
+						"SP3134229"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastroAluno",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ra\": \"SP3234334\",\r\n    \"nomeAluno\": \"Roberto\",\r\n    \"emailAluno\": \"abadia@ana.com\",\r\n    \"senhaAluno\": \"seu1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/aluno/cadastro",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"aluno",
+						"cadastro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletarAluno",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idDelete\": 9\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/aluno/delete/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"aluno",
+						"delete",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "alterarsenhaAluno",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"novaSenha\": \"senha123\",\r\n    \"senhaAtual\": \"novaSenha123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/aluno/alterar-senha/SP3134229",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"aluno",
+						"alterar-senha",
+						"SP3134229"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loginAluno",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"SP3134229\",  // RA do aluno ou código do recepcionista\r\n    \"senha\": \"senha123\",       // Senha do usuário\r\n    \"userType\": \"aluno\"        // Tipo de usuário: \"aluno\" ou \"recepcionista\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/aluno/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"aluno",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarRecep",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/recepcionista/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"recepcionista",
+						"listar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loginRecep",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"RP3134229\",  // Código do recepcionista\r\n    \"senha\": \"senha678\",       // Senha do recepcionista\r\n    \"userType\": \"recepcionista\" // Tipo de usuário: \"recepcionista\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/recepcionista/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"recepcionista",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarDisciplina",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/disciplinas/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"disciplinas",
+						"listar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarnomeDisciplina",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/disciplinas/buscar/nome/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"disciplinas",
+						"buscar",
+						"nome",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarDisciplinaNomes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/disciplinas/listar-nomes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"disciplinas",
+						"listar-nomes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscaridDisciplina",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/disciplinas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"disciplinas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastrarDisciplina",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nomeDisciplina\": \"Programação Orientada a Objetos\",\r\n  \"cargaHoraria\": 80,\r\n  \"numeroAlunos\": 40\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/disciplinas/cadastrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"disciplinas",
+						"cadastrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletarDisciplina",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idDelete\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/disciplinas/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"disciplinas",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "atualizarDisciplina",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nomeDisciplina\": \"Linguagem de Programação\",\r\n  \"cargaHoraria\": 60,\r\n  \"numeroAlunos\": 35\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/disciplinas/atualizar/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"disciplinas",
+						"atualizar",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agendaHorario",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/agenda/receber-horario/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"agenda",
+						"receber-horario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agendaCadastrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": \"2023-10-15\",\r\n    \"horario\": \"10:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/agenda/agendar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"agenda",
+						"agendar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agendaDisciplinaeData",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/agenda/horarios/4/2024-03-15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"agenda",
+						"horarios",
+						"4",
+						"2024-03-15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agendaPorId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/agenda/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"agenda",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarProf",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/professores/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"professores",
+						"listar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastrarProf",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nomeProf\": \"Professor João Silva\",\r\n  \"emailProf\": \"joao.silva@ifsp.edu.br\",\r\n  \"statusProf\": \"Ativo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/professores/cadastrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"professores",
+						"cadastrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "atualizarProf",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nomeProf\": \"João Silva\",\r\n  \"emailProf\": \"joao.silvwa@ifsp.edu.br\",\r\n  \"statusProf\": \"Ativo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/professores/atualizar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"professores",
+						"atualizar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletarProf",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idDelete\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/professores/deletar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"professores",
+						"deletar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarCurso",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/cursos/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"cursos",
+						"listar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarnomeCurso",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/cursos/buscar/nome/Curso de Node",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"cursos",
+						"buscar",
+						"nome",
+						"Curso de Node"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarCursoNome",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/cursos/listar-nomes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"cursos",
+						"listar-nomes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarCursoID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/cursos/buscar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"cursos",
+						"buscar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastrarCurso",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"nomeCurso\": \"Curso de Node\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/cursos/cadastrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"cursos",
+						"cadastrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletarCurso",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/cursos/deletar/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"cursos",
+						"deletar",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarDiscRep",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/api/disc-rep",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"disc-rep"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarporidDiscRep",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/disc-rep/1/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"disc-rep",
+						"1",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarporidDiscRep Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://localhost:8887/api/disc-rep/buscar?idDisciplina=4&idRep=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"disc-rep",
+						"buscar"
+					],
+					"query": [
+						{
+							"key": "idDisciplina",
+							"value": "4"
+						},
+						{
+							"key": "idRep",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastrarDiscRep",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idDisciplina",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "idRep",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8887/api/disc-rep/cadastrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"disc-rep",
+						"cadastrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletarDiscRep",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/disc-rep/4/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"disc-rep",
+						"4",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarCursoHasDisciplina",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/curso-disciplina/listar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"curso-disciplina",
+						"listar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarDisciplinaporcursoCursoHasDisciplina",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/curso-disciplina/curso/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"curso-disciplina",
+						"curso",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarPorIdCursoHasDisciplina",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/curso-disciplina/1/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"curso-disciplina",
+						"1",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastrarCursoHasDisciplina",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idCurso",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "idDisciplina",
+							"value": "4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8887/api/curso-disciplina/cadastrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"curso-disciplina",
+						"cadastrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletarCursoHasDisciplina",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/curso-disciplina/4/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"curso-disciplina",
+						"4",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarCadastro",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listartotalpendentesCadastro",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/total/pendentes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"total",
+						"pendentes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listartotalativosCadastro",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/total/ativos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"total",
+						"ativos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarPorIdCadastro",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "buscarPorRACadastro",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/aluno/SP3134229",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"aluno",
+						"SP3134229"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agendarCadastro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idRecepcionista\": 1,\r\n    \"idAgendamento\": 3,\r\n    \"raAluno\": \"SP1817223\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/agendar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"agendar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "aceitarCadastro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/aceitar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"aceitar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rejeitarCadastro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/rejeitar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"rejeitar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listarpendentesCadastro",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/pendentes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"pendentes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cadastrarCadastro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idRecepcionista",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "idAgendamento",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "raAluno",
+							"value": "SP3234224",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/cadastrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"cadastrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletarCadastro",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8887/api/cadastro/deletar/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8887",
+					"path": [
+						"api",
+						"cadastro",
+						"deletar",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
