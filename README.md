@@ -40,26 +40,6 @@ Este projeto foi desenvolvido como parte de uma atividade acadêmica com o objet
 └── README.md
 ```
 
-## 🚀 Como Executar o Projeto
-
-1. **Clone o repositório:**
-```bash
-git clone https://github.com/JAOOUJIN/Projeto-Sistema-de-Agendamento.git
-```
-
-2. **Configure o banco de dados:**
-   - Crie um banco de dados no **SQL Server Management Studio**.
-   - Execute o script `script_banco.sql` para criar as tabelas e relacionamentos.
-
-3. **Configure e execute o backend Java:**
-   - Importe o projeto Java no Eclipse ou IntelliJ.
-   - Configure o servidor Apache Tomcat.
-   - Atualize a string de conexão com o banco (URL, usuário e senha do SQL Server).
-
-4. **Execute o frontend:**
-   - Acesse os arquivos HTML na pasta `testeFront` diretamente no navegador.
-   - O frontend consome as rotas criadas no backend Java.
-
 ## 🧠 Aprendizados
 
 Durante o desenvolvimento, trabalhei com:
