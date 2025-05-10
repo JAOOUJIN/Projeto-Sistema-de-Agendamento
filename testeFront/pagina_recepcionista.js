@@ -66,7 +66,7 @@ document.getElementById("buscarGeralForm").onsubmit = function (event) {
 
 // Função para adicionar aluno
 document.getElementById("addStudentForm").onsubmit = async function (event) {
-    event.preventDefault(); // Impede o envio padrão do formulário
+    event.preventDefault(); 
 
     const alunoData = {
         ra: document.getElementById("ra").value,
@@ -100,7 +100,7 @@ document.getElementById("addStudentForm").onsubmit = async function (event) {
 
 // Função para adicionar curso
 document.getElementById("addCursoForm").onsubmit = async function (event) {
-    event.preventDefault(); // Impede o envio padrão do formulário
+    event.preventDefault(); 
 
     const cursoData = {
         nomeCurso: document.getElementById("nomeCurso").value
@@ -131,7 +131,7 @@ document.getElementById("addCursoForm").onsubmit = async function (event) {
 
 // Função para adicionar disciplina
 document.getElementById("addDisciplinaForm").onsubmit = async function (event) {
-    event.preventDefault(); // Impede o envio padrão do formulário
+    event.preventDefault(); 
 
     const disciplinaData = {
         nomeDisciplina: document.getElementById("nomeDisciplina").value,
@@ -164,7 +164,7 @@ document.getElementById("addDisciplinaForm").onsubmit = async function (event) {
 
 // Função para deletar disciplina
 document.getElementById("deleteDisciplinaForm").onsubmit = async function (event) {
-    event.preventDefault(); // Impede o envio padrão do formulário
+    event.preventDefault(); 
 
     const idDisciplina = document.getElementById("idDisciplina").value;
 
@@ -189,7 +189,7 @@ document.getElementById("deleteDisciplinaForm").onsubmit = async function (event
 
 // Função para deletar curso
 document.getElementById("deleteCursoForm").onsubmit = async function (event) {
-    event.preventDefault(); // Impede o envio padrão do formulário
+    event.preventDefault(); 
 
     const idCurso = document.getElementById("idCurso").value;
 
@@ -214,7 +214,7 @@ document.getElementById("deleteCursoForm").onsubmit = async function (event) {
 
 // Função para buscar geral
 document.getElementById("buscarGeralForm").onsubmit = async function (event) {
-    event.preventDefault(); // Impede o envio padrão do formulário
+    event.preventDefault(); 
 
     const tipoBusca = document.getElementById("tipoBusca").value;
     const termoBusca = document.getElementById("termoBusca").value;

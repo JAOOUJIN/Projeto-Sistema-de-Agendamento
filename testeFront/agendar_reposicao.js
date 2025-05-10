@@ -56,7 +56,6 @@ $(document).ready(function () {
 
             horarioSelect.empty().append(new Option("Selecione um horário", ""));
             horarios.forEach(horario => {
-                // Agora, estamos usando o idRep como valor da opção
                 horarioSelect.append(new Option(horario.horario, horario.idRep));
             });
         } catch (error) {

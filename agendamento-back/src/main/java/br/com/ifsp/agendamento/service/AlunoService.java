@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class AlunoService {
-    // Serviço onde você coloca suas regras
 
     @Autowired
     private AlunoRepository repository;
@@ -78,7 +77,7 @@ public class AlunoService {
 
     // Busca alunos pelo nome
     public List<AlunoEntity> buscarPorNome(String nome) {
-        return repository.findByNomeAlunoContainingIgnoreCase(nome); // Supondo que você tenha esse método no repositório
+        return repository.findByNomeAlunoContainingIgnoreCase(nome); 
     }
 
     // Realiza o login do aluno

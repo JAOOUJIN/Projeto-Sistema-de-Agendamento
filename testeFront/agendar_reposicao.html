@@ -7,7 +7,7 @@
     <title>Agendar Reposição</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300" rel="stylesheet">
-    <link rel="stylesheet" href="agendar_reposicao.css"> <!-- CSS específico -->
+    <link rel="stylesheet" href="agendar_reposicao.css"> 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="agendar_reposicao.js" defer></script>
 </head>
@@ -70,7 +70,6 @@
                 <label for="horario" class="form-label">Horário</label>
                 <select id="horario" required>
                     <option value="">Selecione um horário</option>
-                    <!-- As opções de horários serão preenchidas via JavaScript -->
                 </select>
             </div>
             <div class="form-element form-submit">
@@ -82,7 +81,7 @@
     <script>
         // Função de logout
         document.getElementById("logoutButton").onclick = function () {
-            localStorage.clear(); // Limpa o localStorage
+            localStorage.clear(); 
             window.location.href = 'index.html'; // Redireciona para a página de login
         };
     </script>
