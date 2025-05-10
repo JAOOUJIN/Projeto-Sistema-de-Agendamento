@@ -1,14 +1,19 @@
 package br.com.ifsp.agendamento.controller;
 
 import br.com.ifsp.agendamento.dto.*;
+import br.com.ifsp.agendamento.repository.AlunoRepository;
+import br.com.ifsp.agendamento.security.JwtUtil;
 import br.com.ifsp.agendamento.service.AlunoService;
 import br.com.ifsp.agendamento.service.RecepcionistaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -20,7 +25,13 @@ public class AlunoController {
     private AlunoService alunoService;
 
     @Autowired
-    private RecepcionistaService recepcionistaService;
+    private AlunoRepository alunoRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     // BUSCAR todos os alunos
     @GetMapping("/buscar")
@@ -51,28 +62,32 @@ public class AlunoController {
 
     //LOGIN
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        // Verifica se o username e senha foram fornecidos
-        if (loginRequest.getUsername() == null || loginRequest.getSenha() == null) {
-            return ResponseEntity.badRequest().body("Código e senha são obrigatórios.");
-        }
-        // Verifica o tipo de usuário e realiza o login
-        if ("recepcionista".equals(loginRequest.getUserType())) {
-            boolean isAuthorized = recepcionistaService.loginRecepcionista(loginRequest);
-            if (!isAuthorized) {
-                return ResponseEntity.status(401).body("Credenciais inválidas para recepcionista.");
-            }
-        } else if ("aluno".equals(loginRequest.getUserType())) {
-            boolean isAuthorized = alunoService.loginAluno(loginRequest);
-            if (!isAuthorized) {
-                return ResponseEntity.status(401).body("Credenciais inválidas para aluno.");
-            }
-        } else {
-            return ResponseEntity.badRequest().body("Tipo de usuário inválido.");
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+
+        if (!"aluno".equalsIgnoreCase(loginRequest.getUserType())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Tipo de usuário inválido.");
         }
 
-        return ResponseEntity.ok("Login realizado com sucesso!");
+        Optional<AlunoEntity> alunoOpt = alunoRepository.findByRa(loginRequest.getUsername());
+
+        if (alunoOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Aluno não encontrado.");
+        }
+
+        AlunoEntity aluno = alunoOpt.get();
+
+        if (!passwordEncoder.matches(loginRequest.getSenha(), aluno.getSenhaAluno())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta.");
+        }
+
+        String token = jwtUtil.generateToken(aluno.getRa(), "ALUNO");
+
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+
+        return ResponseEntity.ok(response);
     }
+
 
     // BUSCAR aluno por RA
     @GetMapping("/{ra}")

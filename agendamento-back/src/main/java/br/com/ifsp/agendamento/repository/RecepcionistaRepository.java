@@ -16,5 +16,7 @@ public interface RecepcionistaRepository extends JpaRepository<RecepcionistaEnti
     @Query(nativeQuery = true, value = "SELECT * FROM RECEPCIONISTA WHERE cd_recep = :cd_recep AND senha = :senha")
     Optional<RecepcionistaEntity> findByCodigoAndSenha(@Param("cd_recep") String cd_recep, @Param("senha") String senha);
 
+    Optional<RecepcionistaEntity> findByCdRecep(String cdRecep);
+
 
 }

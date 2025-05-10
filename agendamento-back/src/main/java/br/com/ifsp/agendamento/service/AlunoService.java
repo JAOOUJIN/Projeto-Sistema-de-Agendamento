@@ -1,6 +1,11 @@
 package br.com.ifsp.agendamento.service;
 import br.com.ifsp.agendamento.dto.*;
 import br.com.ifsp.agendamento.repository.AlunoRepository;
+import br.com.ifsp.agendamento.security.JwtUtil;
+import br.com.ifsp.agendamento.util.PasswordUtil;
+import org.springframework.http.ResponseEntity;
+import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,12 @@ public class AlunoService {
 
     @Autowired
     private AlunoRepository repository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ModelMapper modelMapper = new ModelMapper();
@@ -54,7 +65,8 @@ public class AlunoService {
         aluno.setRa(alunoRequest.getRa());
         aluno.setNomeAluno(alunoRequest.getNomeAluno());
         aluno.setEmailAluno(alunoRequest.getEmailAluno());
-        aluno.setSenhaAluno(alunoRequest.getSenhaAluno());
+        String senhaCriptografada = passwordEncoder.encode(alunoRequest.getSenhaAluno());
+        aluno.setSenhaAluno(senhaCriptografada);
 
         // Define o status como "Ativo"
         aluno.setStatusAluno("Ativo");
@@ -63,28 +75,28 @@ public class AlunoService {
         repository.save(aluno);
     }
 
+
     // Busca alunos pelo nome
     public List<AlunoEntity> buscarPorNome(String nome) {
         return repository.findByNomeAlunoContainingIgnoreCase(nome); // Supondo que você tenha esse método no repositório
     }
 
     // Realiza o login do aluno
-    public boolean loginAluno(LoginRequest loginRequest) {
-        // Verifica se o RA e a senha foram fornecidos
+    public String loginAluno(LoginRequest loginRequest) {
         if (loginRequest.getUsername() == null || loginRequest.getSenha() == null) {
             throw new IllegalArgumentException("RA e senha são obrigatórios.");
         }
 
-        // Busca o aluno pelo RA e senha
-        Optional<AlunoEntity> aluno = repository.findByRaAndSenha(loginRequest.getUsername(), loginRequest.getSenha());
+        Optional<AlunoEntity> alunoOptional = repository.findByRa(loginRequest.getUsername());
 
-        if (aluno.isPresent()) {
-            System.out.println("Login bem-sucedido para o aluno: " + aluno.get().getNomeAluno());
-            return true;
-        } else {
-            System.out.println("Nenhum aluno encontrado com o RA " + loginRequest.getUsername());
-            return false;
+        if (alunoOptional.isPresent()) {
+            AlunoEntity aluno = alunoOptional.get();
+            if (passwordEncoder.matches(loginRequest.getSenha(), aluno.getSenhaAluno())) {
+                return jwtUtil.generateToken(aluno.getRa(), "ALUNO"); // Gera token com o RA do aluno
+            }
         }
+
+        throw new RuntimeException("RA ou senha inválidos.");
     }
 
     // Busca um aluno pelo RA
@@ -98,11 +110,12 @@ public class AlunoService {
         if (alunoOptional.isPresent()) {
             AlunoEntity aluno = alunoOptional.get();
             // Verifica se a senha atual está correta
-            if (!aluno.getSenhaAluno().equals(alterarSenhaRequest.getSenhaAtual())) {
+            if (!passwordEncoder.matches(alterarSenhaRequest.getSenhaAtual(), aluno.getSenhaAluno())) {
                 throw new IllegalArgumentException("A senha atual está incorreta.");
             }
             // Atualiza a senha
-            aluno.setSenhaAluno(alterarSenhaRequest.getNovaSenha());
+            String novaSenhaCriptografada = passwordEncoder.encode(alterarSenhaRequest.getNovaSenha());
+            aluno.setSenhaAluno(novaSenhaCriptografada);
             repository.save(aluno);
         } else {
             throw new IllegalArgumentException("Aluno não encontrado.");

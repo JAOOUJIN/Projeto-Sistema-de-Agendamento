@@ -16,7 +16,7 @@ public class RecepcionistaEntity {
     private Long idRecep;
 
     @Column(name = "cd_recep",nullable = false,unique = true,length = 11)
-    private String cd_recep;
+    private String cdRecep;
 
     @Column(name = "nome_recep", nullable = false, length = 50)
     private String nome;
@@ -43,12 +43,12 @@ public class RecepcionistaEntity {
         this.email = email;
     }
 
-    public String getCd_recep() {
-        return cd_recep;
+    public String getCdRecep() {
+        return cdRecep;
     }
 
-    public void setCd_recep(String cd_recep) {
-        this.cd_recep = cd_recep;
+    public void setCdRecep(String cd_recep) {
+        this.cdRecep = cd_recep;
     }
 
     public String getNome() {
