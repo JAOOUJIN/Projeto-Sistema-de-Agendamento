@@ -28,7 +28,7 @@ public class AgendaService {
         // Busca os horários associados ao ID do curso
         List<AgendamentoEntity> horario = repository.findHorariosPorIdCurso(id);
         return horario.stream()
-                .map(ent -> new HorariosCursoResponse(ent.getId_rep(), ent.getHorario(), ent.getData()))
+                .map(ent -> new HorariosCursoResponse(ent.getId_rep(), ent.getHorario(), ent.getData())) // Incluindo o id_rep
                 .toList();
     }
 

@@ -52,7 +52,7 @@ public class ProfessorService {
     public void deletarProfessor(Long id) {
         // Verifica se o professor existe antes de tentar deletá-lo
         if (!professorRepository.existsById(id)) {
-            throw new RuntimeException("Professor não encontrado para o ID: " + id); 
+            throw new RuntimeException("Professor não encontrado para o ID: " + id); // Lança exceção se o professor não for encontrado
         }
         // Deleta o professor pelo ID
         professorRepository.deleteById(id);
