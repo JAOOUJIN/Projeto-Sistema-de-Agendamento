@@ -1,39 +1,27 @@
 package br.com.ifsp.agendamento.controller;
 
 import br.com.ifsp.agendamento.dto.*;
-import br.com.ifsp.agendamento.repository.AlunoRepository;
-import br.com.ifsp.agendamento.security.JwtUtil;
 import br.com.ifsp.agendamento.service.AlunoService;
-import br.com.ifsp.agendamento.service.RecepcionistaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/aluno")
 public class AlunoController {
 
-    // Recebe as requisições do fronta
     @Autowired
     private AlunoService alunoService;
 
-    @Autowired
-    private AlunoRepository alunoRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
     // BUSCAR todos os alunos
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'RECEPCIONISTA')")
     @GetMapping("/buscar")
     public List<AlunoEntity> buscaTodos(){
         // Retorna a lista de todos os alunos cadastrados no sistema
@@ -41,55 +29,27 @@ public class AlunoController {
     }
 
     //DELETE
+    @PreAuthorize("hasAuthority('RECEPCIONISTA')")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletar(@PathVariable("id") Long idDelete) {
+    public ResponseEntity<Void> deletar(@PathVariable("id") Long idDelete) {
         alunoService.delete(idDelete);
-        return ResponseEntity.ok("Aluno deletado com sucesso!");
+        return ResponseEntity.noContent().build();
     }
 
     //CADASTRAR
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'RECEPCIONISTA')")
     @PostMapping("/cadastro")
-    public ResponseEntity<String> cadastrarAluno(@RequestBody AlunoRequest alunoRequest) {
+    public ResponseEntity<Map<String, String>> cadastrarAluno(@RequestBody AlunoRequest alunoRequest) {
         try {
-            // Cadastra um novo aluno
             alunoService.cadastrarAluno(alunoRequest);
-            return ResponseEntity.ok("Aluno cadastrado com sucesso!");
+            return ResponseEntity.ok(Map.of("mensagem", "Aluno cadastrado com sucesso!"));
         } catch (IllegalArgumentException e) {
-            // Retorna erro caso haja problema no cadastro
-            return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("erro", "Erro: " + e.getMessage()));
         }
     }
-
-    //LOGIN
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-
-        if (!"aluno".equalsIgnoreCase(loginRequest.getUserType())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Tipo de usuário inválido.");
-        }
-
-        Optional<AlunoEntity> alunoOpt = alunoRepository.findByRa(loginRequest.getUsername());
-
-        if (alunoOpt.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Aluno não encontrado.");
-        }
-
-        AlunoEntity aluno = alunoOpt.get();
-
-        if (!passwordEncoder.matches(loginRequest.getSenha(), aluno.getSenhaAluno())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta.");
-        }
-
-        String token = jwtUtil.generateToken(aluno.getRa(), "ALUNO");
-
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-
-        return ResponseEntity.ok(response);
-    }
-
 
     // BUSCAR aluno por RA
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'RECEPCIONISTA')")
     @GetMapping("/{ra}")
     public ResponseEntity<AlunoEntity> buscarPorRa(@PathVariable String ra) {
         // Busca o aluno pelo RA fornecido
@@ -102,6 +62,7 @@ public class AlunoController {
     }
 
     // BUSCAR aluno por nome
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'RECEPCIONISTA')")
     @GetMapping("/buscar/nome/{nome}")
     public ResponseEntity<List<AlunoEntity>> buscarPorNome(@PathVariable String nome) {
         // Busca alunos pelo nome fornecido
@@ -110,6 +71,7 @@ public class AlunoController {
     }
 
     // ALTERAR senha do aluno
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'RECEPCIONISTA')")
     @PutMapping("/alterar-senha/{ra}")
     public ResponseEntity<String> alterarSenha(@PathVariable String ra, @RequestBody AlterarSenhaRequest alterarSenhaRequest) {
         try {
@@ -123,6 +85,7 @@ public class AlunoController {
     }
 
     //BUSCA TOTAL ALUNOS
+    @PreAuthorize("hasAuthority('RECEPCIONISTA')")
     @GetMapping("/total")
     public ResponseEntity<Integer> contarTotalAlunos() {
         int totalAlunos = alunoService.contarTotalAlunos();

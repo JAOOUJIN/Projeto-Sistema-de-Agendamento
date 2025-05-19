@@ -6,6 +6,7 @@ import br.com.ifsp.agendamento.dto.DisciplinaEntity;
 import br.com.ifsp.agendamento.service.CursoHasDisciplinaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class CursoHasDisciplinaController {
     private CursoHasDisciplinaService service;
 
     //CRIAR RELACIONAMENTO
+    @PreAuthorize("hasAuthority('RECEPCIONISTA')")
     @PostMapping("/cadastrar")
     public ResponseEntity<?> criar(@RequestParam Long idCurso, @RequestParam Long idDisciplina) {
         try {
@@ -31,6 +33,7 @@ public class CursoHasDisciplinaController {
     }
 
     //BUSCA TODOS RELACIONAMENTOS
+    @PreAuthorize("hasAuthority('RECEPCIONISTA')")
     @GetMapping("/listar")
     public ResponseEntity<List<CursoHasDisciplinaEntity>> buscarTodos() {
         // Retorna a lista de todas as relações entre cursos e disciplinas
@@ -39,6 +42,7 @@ public class CursoHasDisciplinaController {
     }
 
     //BUSCA POR ID
+    @PreAuthorize("hasAuthority('RECEPCIONISTA')")
     @GetMapping("/{cursoId}/{disciplinaId}")
     public ResponseEntity<CursoHasDisciplinaEntity> buscarPorId(
             @PathVariable Long cursoId,
@@ -51,6 +55,7 @@ public class CursoHasDisciplinaController {
     }
 
     //Listar Disciplina por Curso
+    @PreAuthorize("hasAuthority('RECEPCIONISTA')")
     @GetMapping("/curso/{cursoId}")
     public ResponseEntity<List<DisciplinaEntity>> listarDisciplinasPorCurso(@PathVariable Long cursoId) {
         // Busca as disciplinas associadas ao curso fornecido
@@ -59,6 +64,7 @@ public class CursoHasDisciplinaController {
     }
 
     //DELETE POR ID
+    @PreAuthorize("hasAuthority('RECEPCIONISTA')")
     @DeleteMapping("/{cursoId}/{disciplinaId}")
     public ResponseEntity<String> remover(
             @PathVariable Long cursoId,

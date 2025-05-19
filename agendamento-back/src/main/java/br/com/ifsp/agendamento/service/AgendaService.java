@@ -5,12 +5,9 @@ import br.com.ifsp.agendamento.dto.AgendamentoRequest;
 import br.com.ifsp.agendamento.dto.responses.HorariosCursoResponse;
 import br.com.ifsp.agendamento.repository.AgendamentoRepository;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,15 +17,12 @@ public class AgendaService {
     @Autowired
     private AgendamentoRepository repository;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     // Metodo para receber horários de um curso
     public List<HorariosCursoResponse> receberHorario(Long id) {
         // Busca os horários associados ao ID do curso
         List<AgendamentoEntity> horario = repository.findHorariosPorIdCurso(id);
         return horario.stream()
-                .map(ent -> new HorariosCursoResponse(ent.getId_rep(), ent.getHorario(), ent.getData())) // Incluindo o id_rep
+                .map(ent -> new HorariosCursoResponse(ent.getId_rep(), ent.getHorario(), ent.getData()))
                 .toList();
     }
 
@@ -45,7 +39,6 @@ public class AgendaService {
         novoAgendamento.setData(request.getData());
         novoAgendamento.setHorario(request.getHorario());
 
-        // Salva o novo agendamento no repositório
         return repository.save(novoAgendamento);
     }
 

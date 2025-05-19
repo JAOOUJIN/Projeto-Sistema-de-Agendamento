@@ -71,8 +71,8 @@ public class CadastroService {
                     .recepcionista(recepcionista)
                     .agendamento(agendamento)
                     .aluno(aluno)
-                    .statusCadastro("Pendente") // Define o status como "Pendente"
-                    .dataCadastro(LocalDate.now()) // Define a data de cadastro como a data atual
+                    .statusCadastro("Pendente")
+                    .dataCadastro(LocalDate.now())
                     .build();
 
             // Salvar no banco de dados
@@ -92,8 +92,8 @@ public class CadastroService {
     public CadastroEntity aceitarCadastro(Long id) {
         CadastroEntity cadastro = cadastroRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cadastro não encontrado."));
-        cadastro.setStatusCadastro("Ativo"); // Atualiza o status para "Ativo"
-        return cadastroRepository.save(cadastro); // Salva as alterações no repositório
+        cadastro.setStatusCadastro("Ativo");
+        return cadastroRepository.save(cadastro);
     }
 
     // Deletar um cadastro
@@ -105,8 +105,8 @@ public class CadastroService {
     public void rejeitarCadastro(Long id) {
         CadastroEntity cadastro = cadastroRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cadastro não encontrado."));
-        cadastro.setStatusCadastro("Rejeitado"); // Atualiza o status para "Rejeitado"
-        cadastroRepository.save(cadastro); // Salva as alterações no repositório
+        cadastro.setStatusCadastro("Rejeitado");
+        cadastroRepository.save(cadastro);
     }
 
     // Buscar cadastros por RA do aluno
@@ -116,12 +116,12 @@ public class CadastroService {
 
     // CONTAR TOTAL PENDENTE
     public int contarTotalAgendamentosPendentes() {
-        return cadastroRepository.fn_TotalAgendamentosPendentes(); // Chama o método do repositório
+        return cadastroRepository.fn_TotalAgendamentosPendentes();
     }
 
     // CONTAR TOTAL ATIVO
     public int contarTotalAgendamentosAtivos() {
-        return cadastroRepository.fn_TotalAgendamentosAtivos(); // Chama o método do repositório
+        return cadastroRepository.fn_TotalAgendamentosAtivos();
     }
 
 }

@@ -11,6 +11,7 @@ import br.com.ifsp.agendamento.service.RecepcionistaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,16 +30,11 @@ public class RecepcionistaController {
     private RecepcionistaRepository recepcionistaRepository;
 
     @Autowired
-    private AlunoRepository alunoRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private JwtUtil jwtUtil;
 
 
     //BUSCAR TODOS
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'RECEPCIONISTA')")
     @GetMapping("/listar")
     public List<RecepcionistaEntity> listarTodos() {
         // Retorna a lista de todos os recepcionistas
@@ -46,6 +42,7 @@ public class RecepcionistaController {
     }
 
     //CADASTRAR RECEPCIONISTA
+    @PreAuthorize("hasAnyAuthority('ALUNO', 'RECEPCIONISTA')")
     @PostMapping("/cadastrar")
     public ResponseEntity<?> cadastrar(@RequestBody CadastroRecepcionistaRequest request) {
         if (recepcionistaRepository.findByCdRecep(request.getCdRecep()).isPresent()) {
@@ -62,7 +59,7 @@ public class RecepcionistaController {
 
         return ResponseEntity.ok("Recepcionista cadastrado com sucesso.");
     }
-
+/*
     //LOGIN
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
@@ -90,5 +87,6 @@ public class RecepcionistaController {
             return ResponseEntity.badRequest().body("Tipo de usuário inválido.");
         }
     }
+ */
 
 }

@@ -7,7 +7,6 @@ import br.com.ifsp.agendamento.dto.DisciplinaEntity;
 import br.com.ifsp.agendamento.repository.AgendamentoRepository;
 import br.com.ifsp.agendamento.repository.DiscRepRepository;
 import br.com.ifsp.agendamento.repository.DisciplinaRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +21,6 @@ public class DiscRepService {
     private DiscRepRepository discRepRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private DisciplinaRepository disciplinaRepository;
 
     @Autowired
@@ -34,14 +30,6 @@ public class DiscRepService {
     public List<AgendamentoEntity> buscarAgendamentosPorDisciplinaEData(Long idDisciplina, LocalDate data) {
         return discRepRepository.findAgendamentosPorDisciplinaEData(idDisciplina, data);
     }
-
-    /**
-     * Cria ou atualiza uma relação entre Disciplina e Agendamento.
-     *
-     * @param idDisciplina ID da disciplina.
-     * @param idRep        ID do agendamento.
-     * @return A entidade DiscRepEntity salva.
-     */
 
     public DiscRepEntity criarRelacao(Long idDisciplina, Long idRep) {
         // Busca a Disciplina pelo ID
@@ -69,30 +57,16 @@ public class DiscRepService {
         return discRepRepository.buscarPorDisciplinaEAgendamento(idDisciplina, idRep);
     }
 
-    /**
-     * Busca todas as relações.
-     *
-     * @return Lista de todas as relações.
-     */
     public List<DiscRepEntity> buscarTodos() {
         return discRepRepository.findAll();
     }
 
-    /**
-     * Busca uma relação pelo ID composto.
-     *
-     * @param id ID composto (DiscRepId).
-     * @return A relação, caso encontrada.
-     */
+
     public Optional<DiscRepEntity> buscarPorId(DiscRepId id) {
         return discRepRepository.findById(id);
     }
 
-    /**
-     * Remove uma relação pelo ID composto.
-     *
-     * @param id ID composto (DiscRepId).
-     */
+
     public void remover(DiscRepId id) {
         if (discRepRepository.existsById(id)) {
             discRepRepository.deleteById(id);
@@ -101,22 +75,10 @@ public class DiscRepService {
         }
     }
 
-    /**
-     * Cria uma instância de DiscRepId.
-     *
-     * @param idDisciplina ID da disciplina.
-     * @param idRep        ID do agendamento.
-     * @return Uma nova instância de DiscRepId.
-     */
     public DiscRepId criarDiscRepId(Long idDisciplina, Long idRep) {
         return new DiscRepId(idDisciplina, idRep);
     }
 
-    /**
-     * Valida o relacionamento antes de salvar.
-     *
-     * @param discRepEntity A entidade a ser validada.
-     */
     private void validarRelacionamento(DiscRepEntity discRepEntity) {
         if (discRepEntity.getDisciplina() == null) {
             throw new IllegalArgumentException("Disciplina não pode ser nula.");

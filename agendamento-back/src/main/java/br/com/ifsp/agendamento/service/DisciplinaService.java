@@ -4,7 +4,6 @@ import br.com.ifsp.agendamento.dto.DisciplinaEntity;
 import br.com.ifsp.agendamento.repository.DisciplinaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.modelmapper.ModelMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +14,6 @@ public class DisciplinaService {
 
     @Autowired
     private DisciplinaRepository disciplinaRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     public DisciplinaService(DisciplinaRepository disciplinaRepository) {
         this.disciplinaRepository = disciplinaRepository;
@@ -39,14 +35,6 @@ public class DisciplinaService {
     public Optional<DisciplinaEntity> buscarPorId(Long id) {
         return disciplinaRepository.findById(id);
     }
-
-    /*
-    // Adicionar ou atualizar uma disciplina
-    public DisciplinaEntity salvarDisciplina(DisciplinaEntity disciplina) {
-        return disciplinaRepository.save(disciplina);
-    }
-
-     */
 
     // Deletar uma disciplina por ID
     public void deletar(Long id) {
@@ -78,6 +66,7 @@ public class DisciplinaService {
         return disciplinaRepository.fn_TotalDisciplinas();
     }
 
+    // Adicionar uma disciplina
     public void adicionarDisciplina(String nomeDisciplina, Long cargaHoraria, Long numeroAlunos) {
         disciplinaRepository.addDisciplina(nomeDisciplina, cargaHoraria, numeroAlunos);
     }

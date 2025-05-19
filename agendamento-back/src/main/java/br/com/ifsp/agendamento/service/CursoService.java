@@ -2,7 +2,6 @@ package br.com.ifsp.agendamento.service;
 
 import br.com.ifsp.agendamento.dto.CursoEntity;
 import br.com.ifsp.agendamento.repository.CursoRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +14,6 @@ public class CursoService {
 
     @Autowired
     private CursoRepository cursoRepository;
-
-    @Autowired
-    private ModelMapper modelMapper = new ModelMapper();
 
     // Metodo para listar todos os cursos
     public List<CursoEntity> listarTodos() {
@@ -35,14 +31,6 @@ public class CursoService {
         return cursoRepository.findById(id);
     }
 
-/*
-    // Metodo para salvar ou atualizar curso
-    public CursoEntity salvarOuAtualizar(CursoEntity curso) {
-        return cursoRepository.save(curso);
-    }
-
- */
-
     // Metodo para deletar curso por ID
     public void deletarPorId(Long id) {
         cursoRepository.deleteById(id);
@@ -58,6 +46,7 @@ public class CursoService {
         return cursoRepository.fn_TotalCursos();
     }
 
+    // Metodo para salvar curso
     public void adicionarCurso(String nomeCurso) {
         cursoRepository.addCurso(nomeCurso);
     }
