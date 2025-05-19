@@ -1,3 +1,5 @@
+import { fetchAutenticado } from './utils.js';
+
 // Função para abrir o modal de detalhes
 function abrirModalDetalhes(agendamento) {
     const modalDetalhes = document.getElementById("modalDetalhes");
@@ -15,7 +17,6 @@ function abrirModalDetalhes(agendamento) {
         <p><strong>Status:</strong> ${agendamento.statusCadastro}</p>
     `;
 
-    // Exibe o modal
     modalDetalhes.style.display = "block";
 }
 
@@ -59,23 +60,17 @@ window.onclick = function (event) {
 // Função de logout
 document.getElementById("logoutButton").onclick = function () {
     localStorage.clear(); // Limpa o localStorage
-    window.location.href = 'index.html'; // Redireciona para a página de login
+    window.location.href = 'index.html';
 };
 
 // Função para carregar agendamentos pendentes
 async function carregarAgendamentosPendentes() {
     try {
-        const response = await fetch("http://localhost:8887/api/cadastro/pendentes");
+        const agendamentos = await fetchAutenticado("http://localhost:8887/api/cadastro/pendentes");
 
-        if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.statusText}`);
-        }
-
-        const agendamentos = await response.json();
         const pendentesList = document.getElementById("pendentesList");
-        pendentesList.innerHTML = ""; // Limpa a lista
+        pendentesList.innerHTML = "";
 
-        // Verifica se há agendamentos pendentes
         if (agendamentos.length === 0) {
             pendentesList.innerHTML = `
                 <tr>
@@ -110,16 +105,9 @@ async function carregarAgendamentosPendentes() {
 // Função para aceitar um agendamento
 async function aceitarAgendamento(id) {
     try {
-        const response = await fetch(`http://localhost:8887/api/cadastro/aceitar/${id}`, {
-            method: "POST"
-        });
-
-        if (response.ok) {
-            alert("Agendamento aceito com sucesso!");
-            carregarAgendamentosPendentes(); // Recarrega a lista
-        } else {
-            throw new Error("Erro ao aceitar o agendamento.");
-        }
+        await fetchAutenticado(`http://localhost:8887/api/cadastro/aceitar/${id}`, "POST");
+        alert("Agendamento aceito com sucesso!");
+        carregarAgendamentosPendentes();
     } catch (error) {
         console.error("Erro ao aceitar agendamento:", error);
         alert("Erro ao aceitar o agendamento.");
@@ -129,16 +117,9 @@ async function aceitarAgendamento(id) {
 // Função para rejeitar um agendamento
 async function rejeitarAgendamento(id) {
     try {
-        const response = await fetch(`http://localhost:8887/api/cadastro/rejeitar/${id}`, {
-            method: "POST"
-        });
-
-        if (response.ok) {
-            alert("Agendamento rejeitado com sucesso!");
-            carregarAgendamentosPendentes(); // Recarrega a lista
-        } else {
-            throw new Error("Erro ao rejeitar o agendamento.");
-        }
+        await fetchAutenticado(`http://localhost:8887/api/cadastro/rejeitar/${id}`, "POST");
+        alert("Agendamento rejeitado com sucesso!");
+        carregarAgendamentosPendentes();
     } catch (error) {
         console.error("Erro ao rejeitar agendamento:", error);
         alert("Erro ao rejeitar o agendamento.");

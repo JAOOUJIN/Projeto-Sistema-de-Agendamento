@@ -14,33 +14,6 @@ $(document).ready(function () {
         $('.topLayer').animate({ 'marginLeft': '0' });
     });
 
-    // Lógica de Login
-    $('#form-login').on('submit', async function (event) {
-        event.preventDefault();
-        const ra = $('#RA-login').val();
-        const senha = $('#password-login').val();
-        const userType = $('#user-type').val();
-
-        try {
-            const response = await fetch("http://localhost:8887/aluno/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username: ra, senha: senha, userType: userType })
-            });
-
-            if (!response.ok) throw new Error(`Erro: ${response.status} - ${await response.text()}`);
-            alert("Login realizado com sucesso!");
-
-            localStorage.setItem('raAluno', ra);
-
-            // Redireciona com base no tipo de usuário
-            if (userType === "aluno") window.location.href = "pagina_aluno.html";
-            else window.location.href = "pagina_recepcionista.html";
-        } catch (error) {
-            alert("Erro no login. " + error.message);
-        }
-    });
-
     $('#form-signup').on('submit', async function (event) {
         event.preventDefault();
 
@@ -82,8 +55,8 @@ $(document).ready(function () {
 
             if (response.ok) {
                 alert("Cadastro realizado com sucesso!");
-                $('#form-signup')[0].reset(); // Limpa o formulário
-                $('#goLeft').click(); // Volta para a tela de login
+                $('#form-signup')[0].reset();
+                $('#goLeft').click();
             } else {
                 alert("Erro no cadastro: " + data);
             }

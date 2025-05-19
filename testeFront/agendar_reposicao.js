@@ -1,10 +1,10 @@
+import { fetchAutenticado } from './utils.js';
+
 $(document).ready(function () {
     // Função para carregar cursos
     async function carregarCursos() {
         try {
-            const response = await fetch("http://localhost:8887/cursos/listar");
-            if (!response.ok) throw new Error("Erro ao carregar cursos");
-            const cursos = await response.json();
+            const cursos = await fetchAutenticado("http://localhost:8887/cursos/listar");
             const cursoSelect = $('#curso');
 
             cursoSelect.empty().append(new Option("Selecione um curso", ""));
@@ -23,9 +23,7 @@ $(document).ready(function () {
         if (!cursoId) return;
 
         try {
-            const response = await fetch(`http://localhost:8887/api/curso-disciplina/curso/${cursoId}`);
-            if (!response.ok) throw new Error("Erro ao carregar disciplinas");
-            const disciplinas = await response.json();
+            const disciplinas = await fetchAutenticado(`http://localhost:8887/api/curso-disciplina/curso/${cursoId}`);
             const disciplinaSelect = $('#disciplina');
 
             disciplinaSelect.empty().append(new Option("Selecione uma disciplina", ""));
@@ -49,9 +47,7 @@ $(document).ready(function () {
         }
 
         try {
-            const response = await fetch(`http://localhost:8887/agenda/horarios/${disciplinaId}/${data}`);
-            if (!response.ok) throw new Error("Erro ao carregar horários");
-            const horarios = await response.json();
+            const horarios = await fetchAutenticado(`http://localhost:8887/agenda/horarios/${disciplinaId}/${data}`);
             const horarioSelect = $('#horario');
 
             horarioSelect.empty().append(new Option("Selecione um horário", ""));
@@ -69,7 +65,7 @@ $(document).ready(function () {
         const disciplinaId = $('#disciplina').val();
         const data = $('#data').val();
         const horarioId = $('#horario').val();
-        const raAluno = localStorage.getItem('raAluno'); // Recupera o RA do aluno do localStorage
+        const raAluno = localStorage.getItem('raAluno');
         const idRecepcionista = 1;
 
         // Verifica se todos os campos estão preenchidos
@@ -82,28 +78,16 @@ $(document).ready(function () {
         const agendamentoData = {
             idRecepcionista: idRecepcionista,
             idAgendamento: parseInt(horarioId),
-            raAluno: raAluno // RA do aluno
+            raAluno: raAluno
         };
 
         try {
-            const response = await fetch("http://localhost:8887/api/cadastro/agendar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(agendamentoData)
-            });
-
-            if (response.ok) {
-                alert("Agendamento confirmado com sucesso!");
-                $('#form-agendamento')[0].reset(); // Limpa o formulário
-            } else {
-                const errorMessage = await response.text();
-                alert(`Erro ao confirmar o agendamento: ${errorMessage}`);
-            }
+            await fetchAutenticado("http://localhost:8887/api/cadastro/agendar", "POST", agendamentoData);
+            alert("Agendamento confirmado com sucesso!");
+            $('#form-agendamento')[0].reset();
         } catch (error) {
-            console.error("Erro na requisição:", error);
-            alert("Erro na requisição.");
+            console.error("Erro ao confirmar o agendamento:", error);
+            alert("Erro ao confirmar o agendamento.");
         }
     });
 

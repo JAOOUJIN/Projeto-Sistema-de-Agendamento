@@ -1,3 +1,5 @@
+import { fetchAutenticado } from './utils.js';
+
 // Abrir modal de cursos
 document.getElementById("openModalCursos").onclick = function () {
     document.getElementById("modalCursos").style.display = "block";
@@ -50,23 +52,21 @@ document.addEventListener('DOMContentLoaded', function () {
         ]
     });
     calendar.render();
+
+    carregarDadosAluno();
 });
 
 // Função para carregar os dados do aluno
 async function carregarDadosAluno() {
-    const raAluno = localStorage.getItem('raAluno');
+    const raAluno = localStorage.getItem("raAluno");
     if (!raAluno) {
-        alert("Por favor, faça login.");
+        alert("RA não encontrado. Faça login novamente.");
+        window.location.href = "index.html";
         return;
     }
 
     try {
-        const response = await fetch(`http://localhost:8887/aluno/${raAluno}`);
-        if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.statusText}`);
-        }
-
-        const aluno = await response.json();
+        const aluno = await fetchAutenticado(`http://localhost:8887/aluno/${raAluno}`);
         document.getElementById("nomeAluno").textContent = aluno.nomeAluno;
         document.getElementById("emailAluno").textContent = aluno.emailAluno;
         document.getElementById("raAluno").textContent = aluno.ra;
@@ -74,18 +74,18 @@ async function carregarDadosAluno() {
     } catch (error) {
         console.error("Erro ao carregar dados do aluno:", error);
         alert("Erro ao carregar dados do aluno. Verifique o console para mais detalhes.");
+        localStorage.clear();
+        window.location.href = "index.html";
     }
 }
-
+// Função para carregar os cursos
 async function carregarCursos() {
     try {
-        const response = await fetch("http://localhost:8887/cursos/listar-nomes");
-        if (!response.ok) {
-            throw new Error("Erro ao buscar cursos");
-        }
-        const cursos = await response.json();
+        const cursos = await fetchAutenticado("http://localhost:8887/cursos/listar-nomes");
+
         const listaCursos = document.getElementById("listaCursos");
-        listaCursos.innerHTML = ""; // Limpar lista antes de preencher
+        listaCursos.innerHTML = "";
+
         cursos.forEach(nomeCurso => {
             const item = document.createElement("li");
             item.textContent = nomeCurso;
@@ -93,18 +93,18 @@ async function carregarCursos() {
         });
     } catch (error) {
         console.error("Erro ao carregar cursos:", error);
+        alert(error.message);
     }
 }
 
+// Função para carregar as disciplinas
 async function carregarDisciplinas() {
     try {
-        const response = await fetch("http://localhost:8887/disciplinas/listar-nomes");
-        if (!response.ok) {
-            throw new Error("Erro ao buscar disciplinas");
-        }
-        const disciplinas = await response.json();
+        const disciplinas = await fetchAutenticado("http://localhost:8887/disciplinas/listar-nomes");
+
         const listaDisciplinas = document.getElementById("listaDisciplinas");
-        listaDisciplinas.innerHTML = ""; // Limpar lista antes de preencher
+        listaDisciplinas.innerHTML = "";
+
         disciplinas.forEach(nomeDisciplina => {
             const item = document.createElement("li");
             item.textContent = nomeDisciplina;
@@ -112,13 +112,15 @@ async function carregarDisciplinas() {
         });
     } catch (error) {
         console.error("Erro ao carregar disciplinas:", error);
+        alert(error.message);
     }
 }
 
+// Função para alterar senha
 document.getElementById("formAlterarSenha").onsubmit = async function (event) {
-    event.preventDefault(); // Evitar o recarregamento da página
+    event.preventDefault();
 
-    const raAluno = localStorage.getItem("raAluno"); // Recuperar o RA do aluno
+    const raAluno = localStorage.getItem("raAluno");
     const senhaAtual = document.getElementById("senhaAtual").value;
     const novaSenha = document.getElementById("novaSenha").value;
     const confirmarSenha = document.getElementById("confirmarSenha").value;
@@ -129,21 +131,10 @@ document.getElementById("formAlterarSenha").onsubmit = async function (event) {
     }
 
     try {
-        const response = await fetch(`http://localhost:8887/aluno/alterar-senha/${raAluno}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                senhaAtual: senhaAtual,
-                novaSenha: novaSenha
-            })
+        await fetchAutenticado(`http://localhost:8887/aluno/alterar-senha/${raAluno}`, "PUT", {
+            senhaAtual: senhaAtual,
+            novaSenha: novaSenha
         });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "Erro ao alterar senha");
-        }
 
         alert("Senha alterada com sucesso!");
         document.getElementById("modalAlterarSenha").style.display = "none";
@@ -153,13 +144,15 @@ document.getElementById("formAlterarSenha").onsubmit = async function (event) {
     }
 };
 
+
 // Carregar dados do aluno ao carregar a página
 document.addEventListener('DOMContentLoaded', carregarDadosAluno);
 
 // Função de logout
 document.getElementById("logoutButton").onclick = function () {
     if (confirm("Tem certeza que deseja sair?")) {
-        localStorage.clear();
+        localStorage.removeItem('raAluno');
+        localStorage.removeItem('token');
         window.location.href = 'index.html';
     }
 };

@@ -1,3 +1,5 @@
+import { fetchAutenticado } from './utils.js';
+
 // Função para abrir o modal de detalhes
 function abrirModalDetalhes(agendamento) {
     const modalDetalhes = document.getElementById("modalDetalhes");
@@ -15,7 +17,6 @@ function abrirModalDetalhes(agendamento) {
         <p><strong>Status:</strong> ${agendamento.statusCadastro}</p>
     `;
 
-    // Exibe o modal
     modalDetalhes.style.display = "block";
 }
 
@@ -38,31 +39,30 @@ window.onclick = function (event) {
 
 // Função de logout
 document.getElementById("logoutButton").onclick = function () {
-    localStorage.clear(); // Limpa o localStorage
-    window.location.href = 'index.html'; // Redireciona para a página de login
+    localStorage.removeItem('raAluno');
+    localStorage.removeItem('token');
+    window.location.href = 'index.html';
 };
 
 // Função para carregar os agendamentos do aluno
 async function carregarMeusAgendamentos() {
-    const raAluno = localStorage.getItem('raAluno'); // Recupera o RA do aluno do localStorage
+    const raAluno = localStorage.getItem('raAluno');
     if (!raAluno) {
         alert("Por favor, faça login.");
         return;
     }
 
     try {
-        const response = await fetch(`http://localhost:8887/api/cadastro/aluno/${raAluno}`);
+        const response = await fetchAutenticado(`http://localhost:8887/api/cadastro/aluno/${raAluno}`);
 
-        // Verifica se a resposta da API é válida
         if (!response.ok) {
             throw new Error(`Erro na requisição: ${response.statusText}`);
         }
 
         const agendamentos = await response.json();
         const agendamentosList = document.getElementById("agendamentosList");
-        agendamentosList.innerHTML = ""; // Limpa a lista
+        agendamentosList.innerHTML = "";
 
-        // Verifica se há agendamentos
         if (agendamentos.length === 0) {
             agendamentosList.innerHTML = `
                 <tr>
@@ -72,7 +72,6 @@ async function carregarMeusAgendamentos() {
             return;
         }
 
-        // Preenche a tabela com os agendamentos
         agendamentos.forEach(agendamento => {
             const tr = document.createElement("tr");
             tr.innerHTML = `

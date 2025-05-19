@@ -1,3 +1,6 @@
+import { fetchAutenticado } from './utils.js';
+
+
 // Funções para abrir e fechar modais
 const modals = {
     addAluno: document.getElementById("modalAddAluno"),
@@ -46,7 +49,8 @@ window.onclick = function (event) {
 
 // Função de logout
 document.getElementById("logoutButton").onclick = function () {
-    localStorage.clear();
+    localStorage.removeItem('raAluno');
+    localStorage.removeItem('token');
     window.location.href = 'index.html';
 };
 
@@ -66,7 +70,7 @@ document.getElementById("buscarGeralForm").onsubmit = function (event) {
 
 // Função para adicionar aluno
 document.getElementById("addStudentForm").onsubmit = async function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const alunoData = {
         ra: document.getElementById("ra").value,
@@ -76,22 +80,11 @@ document.getElementById("addStudentForm").onsubmit = async function (event) {
     };
 
     try {
-        const response = await fetch("http://localhost:8887/aluno/cadastro", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(alunoData)
-        });
+        await fetchAutenticado("http://localhost:8887/aluno/cadastro", "POST", alunoData);
 
-        if (response.ok) {
-            alert("Aluno adicionado com sucesso!");
-            modals.addAluno.style.display = "none";
-            document.getElementById("addStudentForm").reset(); // Limpa o formulário
-        } else {
-            const errorMessage = await response.text();
-            alert("Erro ao adicionar aluno: " + errorMessage);
-        }
+        alert("Aluno adicionado com sucesso!");
+        modals.addAluno.style.display = "none";
+        document.getElementById("addStudentForm").reset();
     } catch (error) {
         console.error("Erro ao adicionar aluno:", error);
         alert("Erro ao adicionar aluno.");
@@ -100,29 +93,19 @@ document.getElementById("addStudentForm").onsubmit = async function (event) {
 
 // Função para adicionar curso
 document.getElementById("addCursoForm").onsubmit = async function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const cursoData = {
         nomeCurso: document.getElementById("nomeCurso").value
     };
 
     try {
-        const response = await fetch("http://localhost:8887/cursos/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(cursoData)
-        });
+        await fetchAutenticado("http://localhost:8887/cursos/cadastrar", "POST", cursoData);
 
-        if (response.ok) {
-            alert("Curso adicionado com sucesso!");
-            modals.addCurso.style.display = "none"; // Fecha o modal
-            document.getElementById("addCursoForm").reset(); // Limpa o formulário
-        } else {
-            const errorMessage = await response.text();
-            alert("Erro ao adicionar curso: " + errorMessage);
-        }
+        alert("Curso adicionado com sucesso!");
+        modals.addCurso.style.display = "none";
+        document.getElementById("addCursoForm").reset();
+
     } catch (error) {
         console.error("Erro ao adicionar curso:", error);
         alert("Erro ao adicionar curso.");
@@ -131,8 +114,7 @@ document.getElementById("addCursoForm").onsubmit = async function (event) {
 
 // Função para adicionar disciplina
 document.getElementById("addDisciplinaForm").onsubmit = async function (event) {
-    event.preventDefault(); 
-
+    event.preventDefault();
     const disciplinaData = {
         nomeDisciplina: document.getElementById("nomeDisciplina").value,
         cargaHoraria: document.getElementById("cargaHoraria").value,
@@ -140,22 +122,12 @@ document.getElementById("addDisciplinaForm").onsubmit = async function (event) {
     };
 
     try {
-        const response = await fetch("http://localhost:8887/disciplinas/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(disciplinaData)
-        });
+        await fetchAutenticado("http://localhost:8887/disciplinas/cadastrar", "POST", disciplinaData);
 
-        if (response.ok) {
-            alert("Disciplina adicionada com sucesso!");
-            modals.addDisciplina.style.display = "none"; // Fecha o modal
-            document.getElementById("addDisciplinaForm").reset(); // Limpa o formulário
-        } else {
-            const errorMessage = await response.text();
-            alert("Erro ao adicionar disciplina: " + errorMessage);
-        }
+        alert("Disciplina adicionada com sucesso!");
+        modals.addDisciplina.style.display = "none";
+        document.getElementById("addDisciplinaForm").reset();
+
     } catch (error) {
         console.error("Erro ao adicionar disciplina:", error);
         alert("Erro ao adicionar disciplina.");
@@ -164,23 +136,17 @@ document.getElementById("addDisciplinaForm").onsubmit = async function (event) {
 
 // Função para deletar disciplina
 document.getElementById("deleteDisciplinaForm").onsubmit = async function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const idDisciplina = document.getElementById("idDisciplina").value;
 
     try {
-        const response = await fetch(`http://localhost:8887/disciplinas/${idDisciplina}`, {
-            method: "DELETE"
-        });
+        await fetchAutenticado(`http://localhost:8887/disciplinas/deletar/${idDisciplina}`, "DELETE");
 
-        if (response.ok) {
-            alert("Disciplina deletada com sucesso!");
-            modals.deleteDisciplina.style.display = "none"; // Fecha o modal
-            document.getElementById("deleteDisciplinaForm").reset(); // Limpa o formulário
-        } else {
-            const errorMessage = await response.text();
-            alert("Erro ao deletar disciplina: " + errorMessage);
-        }
+        alert("Disciplina deletada com sucesso!");
+        modals.deleteDisciplina.style.display = "none";
+        document.getElementById("deleteDisciplinaForm").reset();
+
     } catch (error) {
         console.error("Erro ao deletar disciplina:", error);
         alert("Erro ao deletar disciplina.");
@@ -189,32 +155,51 @@ document.getElementById("deleteDisciplinaForm").onsubmit = async function (event
 
 // Função para deletar curso
 document.getElementById("deleteCursoForm").onsubmit = async function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const idCurso = document.getElementById("idCurso").value;
 
     try {
-        const response = await fetch(`http://localhost:8887/cursos/deletar/${idCurso}`, {
-            method: "DELETE"
-        });
+        await fetchAutenticado(`http://localhost:8887/cursos/deletar/${idCurso}`, "DELETE");
 
-        if (response.ok) {
-            alert("Curso deletado com sucesso!");
-            modals.deleteCurso.style.display = "none";
-            document.getElementById("deleteCursoForm").reset(); // Limpa o formulário
-        } else {
-            const errorMessage = await response.text();
-            alert("Erro ao deletar curso: " + errorMessage);
-        }
+        alert("Curso deletado com sucesso!");
+        modals.deleteCurso.style.display = "none";
+        document.getElementById("deleteCursoForm").reset();
+
     } catch (error) {
         console.error("Erro ao deletar curso:", error);
         alert("Erro ao deletar curso.");
     }
 };
 
+document.getElementById("deleteStudentForm").onsubmit = async function (event) {
+    event.preventDefault();
+
+    const raAluno = document.getElementById("raDelete").value;
+
+    try {
+        const aluno = await fetchAutenticado(`http://localhost:8887/aluno/${raAluno}`, "GET");
+        console.log("Aluno recebido:", aluno);
+
+        if (!aluno || !aluno.idAluno) {
+            alert("Aluno não encontrado.");
+            return;
+        }
+
+        await fetchAutenticado(`http://localhost:8887/aluno/delete/${aluno.idAluno}`, "DELETE");
+
+        alert("Aluno deletado com sucesso!");
+        modals.deleteAluno.style.display = "none";
+        document.getElementById("deleteStudentForm").reset();
+    } catch (error) {
+        console.error("Erro ao deletar aluno:", error);
+        alert("Erro ao deletar aluno.");
+    }
+};
+
 // Função para buscar geral
 document.getElementById("buscarGeralForm").onsubmit = async function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const tipoBusca = document.getElementById("tipoBusca").value;
     const termoBusca = document.getElementById("termoBusca").value;
@@ -229,16 +214,8 @@ document.getElementById("buscarGeralForm").onsubmit = async function (event) {
     }
 
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error("Erro ao buscar " + tipoBusca);
-        }
-
-        const resultados = await response.json();
-
+        const resultados = await fetchAutenticado(url);
         exibirResultados(tipoBusca, resultados);
-
-        // Fechar o modal após a busca
         modals.buscarGeral.style.display = "none";
     } catch (error) {
         console.error("Erro ao buscar:", error);
@@ -276,7 +253,7 @@ function exibirResultados(tipo, resultados) {
         }
     }
 
-    alert(mensagem); // Exibe os resultados em um alerta
+    alert(mensagem);
 }
 
 // Inicializar o calendário
@@ -313,3 +290,67 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     calendar.render();
 });
+
+// Função para carregar o total de alunos
+async function loadTotalAlunos() {
+    try {
+        const totalAlunos = await fetchAutenticado('http://localhost:8887/aluno/total');
+        document.getElementById('totalAlunos').innerText = totalAlunos;
+    } catch (error) {
+        console.error('Erro ao carregar total de alunos:', error);
+        document.getElementById('totalAlunos').innerText = 'Erro';
+    }
+}
+
+// Função para carregar o total de cursos
+async function loadTotalCursos() {
+    try {
+        const totalCursos = await fetchAutenticado('http://localhost:8887/cursos/total');
+        document.getElementById('totalCursos').innerText = totalCursos;
+    } catch (error) {
+        console.error('Erro ao carregar total de cursos:', error);
+        document.getElementById('totalCursos').innerText = 'Erro';
+    }
+}
+
+// Função para carregar o total de disciplinas
+async function loadTotalDisciplinas() {
+    try {
+        const totalDisciplinas = await fetchAutenticado('http://localhost:8887/disciplinas/total');
+        document.getElementById('totalDisciplinas').innerText = totalDisciplinas;
+    } catch (error) {
+        console.error('Erro ao carregar total de disciplinas:', error);
+        document.getElementById('totalDisciplinas').innerText = 'Erro';
+    }
+}
+
+// Função para carregar o total de agendamentos pendentes
+async function loadTotalAgendamentosPendentes() {
+    try {
+        const totalPendentes = await fetchAutenticado('http://localhost:8887/api/cadastro/total/pendentes');
+        document.getElementById('totalAgendamentosPendentes').innerText = totalPendentes;
+    } catch (error) {
+        console.error('Erro ao carregar total de agendamentos pendentes:', error);
+        document.getElementById('totalAgendamentosPendentes').innerText = 'Erro';
+    }
+}
+
+// Função para carregar o total de agendamentos ativos
+async function loadTotalAgendamentosAtivos() {
+    try {
+        const totalAtivos = await fetchAutenticado('http://localhost:8887/api/cadastro/total/ativos');
+        document.getElementById('totalAgendamentosAtivos').innerText = totalAtivos;
+    } catch (error) {
+        console.error('Erro ao carregar total de agendamentos ativos:', error);
+        document.getElementById('totalAgendamentosAtivos').innerText = 'Erro';
+    }
+}
+
+// Chama as funções ao carregar a página
+window.onload = function () {
+    loadTotalAlunos();
+    loadTotalCursos();
+    loadTotalDisciplinas();
+    loadTotalAgendamentosPendentes();
+    loadTotalAgendamentosAtivos();
+};

@@ -89,27 +89,27 @@
             <div class="card">
                 <i class="fas fa-users fa-3x"></i>
                 <h3>Alunos</h3>
-                <p>X</p>
+                <p id="totalAlunos">X</p> <!-- ID adicionado para facilitar a atualização -->
             </div>
             <div class="card">
                 <i class="fas fa-book-open fa-3x"></i>
                 <h3>Cursos</h3>
-                <p>Y</p>
+                <p id="totalCursos">Y</p> <!-- ID adicionado para facilitar a atualização -->
             </div>
             <div class="card">
                 <i class="fas fa-book fa-3x"></i>
                 <h3>Disciplinas</h3>
-                <p>Z</p>
+                <p id="totalDisciplinas">Z</p> <!-- ID adicionado para facilitar a atualização -->
             </div>
             <div class="card">
                 <i class="fas fa-calendar-times fa-3x"></i>
                 <h3>Agendamentos Pendentes</h3>
-                <p>A</p>
+                <p id="totalAgendamentosPendentes">A</p> <!-- ID adicionado para facilitar a atualização -->
             </div>
             <div class="card">
                 <i class="fas fa-calendar-check fa-3x"></i>
                 <h3>Agendamentos Ativos</h3>
-                <p>B</p>
+                <p id="totalAgendamentosAtivos">B</p> <!-- ID adicionado para facilitar a atualização -->
             </div>
         </div>
 
@@ -147,6 +147,7 @@
             </form>
         </div>
     </div>
+
     <div id="modalDeleteAluno" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -217,10 +218,13 @@
             </form>
         </div>
     </div>
-    
-    <script src="pagina_recepcionista.js"></script>
+
+    <!--JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/pt-br.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="auth.js"></script>
+    <script type="module" src="pagina_recepcionista.js"></script>
 </body>
 
 </html>
